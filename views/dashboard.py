@@ -13,7 +13,6 @@ def show():
         st.warning("Nenhum estudante cadastrado ainda.")
         return
 
-    # 🔹 Estatísticas principais
     st.metric("👨‍🎓 Total de estudantes", total_estudante)
     st.metric("📌 Último cadastrado", estudante[-1].nome)
 
@@ -27,13 +26,11 @@ def show():
     col2.metric("🏆 Maior média", f"{maior_media.media:.2f} ({maior_media.nome})")
     col3.metric("📉 Menor média", f"{menor_media.media:.2f} ({menor_media.nome})")
 
-    # 🔹 Dados individuais
     nota1s = [e.nota1 for e in estudante]
     nota2s = [e.nota2 for e in estudante]
     nota3s = [e.nota3 for e in estudante]
     nomes = [e.nome for e in estudante]
 
-    # 📊 Gráfico 1 - Média por estudante
     st.subheader("📊 Média por estudante")
     fig, ax = plt.subplots()
     ax.bar(nomes, medias, color="skyblue")
@@ -41,7 +38,6 @@ def show():
     ax.set_xticklabels(nomes, rotation=45, ha="right")
     st.pyplot(fig)
 
-    # 📊 Gráfico 2 - Notas por estudante (barras agrupadas)
     st.subheader("📊 Notas por estudante")
     indices = np.arange(total_estudante)
     largura = 0.25
@@ -55,8 +51,7 @@ def show():
     ax.legend()
     st.pyplot(fig)
 
-    # 📊 Gráfico 3 - Evolução das médias da turma
-    st.subheader("📈 Evolução do desempenho (média por avaliação)")
+    st.subheader("📈 Evolução do desempenho")
     medias_avaliacoes = [
         sum(nota1s) / total_estudante,
         sum(nota2s) / total_estudante,
@@ -67,7 +62,6 @@ def show():
     ax.set_ylabel("Média da turma")
     st.pyplot(fig)
 
-    # 📋 Lista de estudantes
     st.subheader("📋 Lista de estudantes")
     for e in estudante:
         st.write(f"👤 {e.nome} — Notas: {e.nota1}, {e.nota2}, {e.nota3} — Média: {e.media:.2f}")
